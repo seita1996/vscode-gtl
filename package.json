@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-gitlab-task-list.helloWorld",
-        "title": "Hello World"
+        "command": "vscode-gitlab-task-list.notify",
+        "title": "notify"
       }
     ]
   },
