@@ -33,6 +33,24 @@
           "default": "Enter your Gitlab Personal Access Token here"
         }
       }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "notificationsView",
+          "title": "GitlabTL",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "notificationsView": [
+        {
+          "type": "webview",
+          "id": "vscode-gitlab-task-list.notificationsView",
+          "name": "GitlabTL"
+        }
+      ]
     }
   },
   "scripts": {

@@ -1,10 +1,11 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { NotificationsViewProvider } from './NotificationsViewProvider';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-export function activate({ subscriptions }: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
 	
 	console.log('Congratulations, your extension "vscode-gitlab-task-list" is now active!');
 	
@@ -18,7 +19,15 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 			+ 'gitlaburl:' + vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlaburl') + ', '
 			+ 'token:' + vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlabtoken'));
 	});
-	subscriptions.push(disposable);
+	context.subscriptions.push(disposable);
+
+	// Register the notifications view
+	context.subscriptions.push(
+		vscode.window.registerWebviewViewProvider(
+			'vscode-gitlab-task-list.notificationsView',
+			new NotificationsViewProvider(context.extensionUri)
+		)
+	);
 }
 
 function _showStatusBarItem(commandId: string) {
