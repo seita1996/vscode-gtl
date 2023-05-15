@@ -9,7 +9,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -17,7 +19,21 @@
         "command": "vscode-gitlab-task-list.notify",
         "title": "notify"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "vscode-gitlab-task-list",
+      "properties": {
+        "vscode-gitlab-task-list.gitlaburl": {
+          "type": "string",
+          "default": "https://gitlab.com"
+        },
+        "vscode-gitlab-task-list.gitlabtoken": {
+          "type": "string",
+          "default": "Enter your Gitlab Personal Access Token here"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

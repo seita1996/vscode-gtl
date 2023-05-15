@@ -14,7 +14,9 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 
 	// show a message box when the command is called
 	let disposable = vscode.commands.registerCommand(commandId, () => {
-		vscode.window.showInformationMessage('nofify!!');
+		vscode.window.showInformationMessage('nofify!' + ', '
+			+ 'gitlaburl:' + vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlaburl') + ', '
+			+ 'token:' + vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlabtoken'));
 	});
 	subscriptions.push(disposable);
 }
