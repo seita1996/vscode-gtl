@@ -1,8 +1,9 @@
 {
   "name": "vscode-gitlab-task-list",
-  "displayName": "vscode-gitlab-task-list",
+  "displayName": "Gitlab Task List",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "publisher": "seitaro",
   "engines": {
     "vscode": "^1.78.0"
   },
