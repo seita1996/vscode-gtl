@@ -4,7 +4,7 @@ import fetch from 'cross-fetch';
 export class NotificationsViewProvider implements vscode.WebviewViewProvider {
     constructor(private readonly extensionUri: vscode.Uri) {}
 
-    public async resolveWebviewView(webviewView: vscode.WebviewView) {
+    public resolveWebviewView(webviewView: vscode.WebviewView) {
         // Set up the webview view
         webviewView.webview.options = {
             enableScripts: true,
@@ -17,7 +17,9 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         );
 
         // Load the content of the view
-        webviewView.webview.html = await this._getHtmlForWebview(styleUri);
+        setInterval(async () => {
+            webviewView.webview.html = await this._getHtmlForWebview(styleUri);
+        }, 10000);
     }
 
     private _displayTodos(data: any) {
@@ -30,9 +32,6 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
                         <div class="flex-between mb-4">
                             <div class="notification__repository">
                                 ${data[i].repository}
-                            </div>
-                            <div class="notification__badge">
-                                ${data[i].unreadCount}
                             </div>
                         </div>
                     </div>
@@ -81,7 +80,6 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         const jsonData = resJson.map((item: any) => {
             return {
                 repository: item.project.name,
-                unreadCount: 0,
                 title: item.target.title,
                 type: item.target_type,
                 avatar: item.author.avatar_url,
