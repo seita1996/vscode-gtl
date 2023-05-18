@@ -1,19 +1,15 @@
 import * as vscode from 'vscode';
+import fetch from 'cross-fetch';
 
 export class NotificationsViewProvider implements vscode.WebviewViewProvider {
     constructor(private readonly extensionUri: vscode.Uri) {}
 
-    public resolveWebviewView(webviewView: vscode.WebviewView) {
+    public async resolveWebviewView(webviewView: vscode.WebviewView) {
         // Set up the webview view
         webviewView.webview.options = {
             enableScripts: true,
             enableCommandUris: true
         };
-
-        // WebView 内で`./public/index.js`を読み込み可能にするためのUri
-        const scriptUri = webviewView.webview.asWebviewUri(
-            vscode.Uri.joinPath(this.extensionUri, "public", "index.js")
-        );
 
         // WebView 内で`./public/index.css`を読み込み可能にするためのUri
         const styleUri = webviewView.webview.asWebviewUri(
@@ -21,10 +17,84 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         );
 
         // Load the content of the view
-        webviewView.webview.html = this._getHtmlForWebview(scriptUri, styleUri);
+        webviewView.webview.html = await this._getHtmlForWebview(styleUri);
     }
 
-    private _getHtmlForWebview(scriptUri: vscode.Uri, styleUri: vscode.Uri) {
+    private _displayTodos(data: any) {
+        let html = "";
+
+        for (let i = 0; i < data.length; i++) {
+            html += `
+                <div class="card linkbox">
+                    <div class="card-header">
+                        <div class="flex-between mb-4">
+                            <div class="notification__repository">
+                                ${data[i].repository}
+                            </div>
+                            <div class="notification__badge">
+                                ${data[i].unreadCount}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="flex-start mb-4">
+                            <div class="notification__icon mr-4">
+                                <img src="${data[i].avatar}" alt="Avatar" />
+                            </div>
+                            <div class="notification__title">
+                                ${data[i].title}
+                            </div>
+                        </div>
+                        <div class="flex-start">
+                            <div class="notification__tag mr-4">
+                                ${data[i].type}
+                            </div>
+                            <div class="notification__type">
+                                ${data[i].notificatonType}
+                            </div>
+                        </div>
+                    </div>
+                    <a href="${data[i].url}"></a>
+                </div>
+            `;
+        }
+
+        return html;
+    }
+
+    private async _fetchTodos() {
+        const baseUrl = vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlaburl');
+        const token: string = vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlabtoken') || '';
+        console.log('baseUrl', baseUrl);
+        console.log('token', token);
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'PRIVATE-TOKEN': token
+            }
+        };
+
+        const res: any = await fetch(`${baseUrl}/api/v4/todos`, requestOptions);
+        const resJson = await res.json();
+
+        const jsonData = resJson.map((item: any) => {
+            return {
+                repository: item.project.name,
+                unreadCount: 0,
+                title: item.target.title,
+                type: item.target_type,
+                avatar: item.author.avatar_url,
+                notificatonType: item.action_name,
+                url: item.target_url,
+            };
+        });
+        return jsonData;
+    }
+
+    private async _getHtmlForWebview(styleUri: vscode.Uri) {
+        const jsonData = await this._fetchTodos();
+
         return `
             <!DOCTYPE html>
             <html lang="ja">
@@ -36,7 +106,7 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
             </head>
             <body>
                 <div id="output"></div>
-                <script src="${scriptUri}" />
+                ${this._displayTodos(jsonData)}
             </body>
             </html>
         `;
