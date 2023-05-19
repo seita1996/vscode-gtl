@@ -1,4 +1,4 @@
-# vscode-gitlab-task-list README
+# Gitlab Task List README
 
 ...
 ## Extension Settings

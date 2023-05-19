@@ -23,13 +23,13 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "vscode-gitlab-task-list",
+      "title": "Gitlab Task List",
       "properties": {
-        "vscode-gitlab-task-list.gitlaburl": {
+        "gitlab-task-list.gitlaburl": {
           "type": "string",
           "default": "https://gitlab.com"
         },
-        "vscode-gitlab-task-list.gitlabtoken": {
+        "gitlab-task-list.gitlabtoken": {
           "type": "string",
           "default": "Enter your Gitlab Personal Access Token here"
         }

@@ -11,7 +11,7 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
             enableCommandUris: true
         };
 
-        // WebView 内で`./public/index.css`を読み込み可能にするためのUri
+        // Uri that enable to load ./public/index.css in the WebView
         const styleUri = webviewView.webview.asWebviewUri(
             vscode.Uri.joinPath(this.extensionUri, "public", "index.css")
         );
@@ -62,10 +62,9 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
     }
 
     private async _fetchTodos() {
-        const baseUrl = vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlaburl');
-        const token: string = vscode.workspace.getConfiguration('vscode-gitlab-task-list').get('gitlabtoken') || '';
-        console.log('baseUrl', baseUrl);
-        console.log('token', token);
+        const baseUrl = vscode.workspace.getConfiguration('gitlab-task-list').get('gitlaburl');
+        const token: string = vscode.workspace.getConfiguration('gitlab-task-list').get('gitlabtoken') || '';
+        console.log('fetch todos');
 
         const requestOptions = {
             method: 'GET',
