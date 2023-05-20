@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import fetch from 'cross-fetch';
+import { fetchTodos } from './gitlabapi/fetchTodos';
 
 export class NotificationsViewProvider implements vscode.WebviewViewProvider {
     constructor(private readonly extensionUri: vscode.Uri) {}
@@ -61,20 +61,8 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         return html;
     }
 
-    private async _fetchTodos() {
-        const baseUrl = vscode.workspace.getConfiguration('gitlab-task-list').get('gitlaburl');
-        const token: string = vscode.workspace.getConfiguration('gitlab-task-list').get('gitlabtoken') || '';
-        console.log('fetch todos');
-
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'PRIVATE-TOKEN': token
-            }
-        };
-
-        const res: any = await fetch(`${baseUrl}/api/v4/todos`, requestOptions);
-        const resJson = await res.json();
+    private async _shapedTodos() {
+        const resJson = await fetchTodos();
 
         const jsonData = resJson.map((item: any) => {
             return {
@@ -90,7 +78,7 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
     }
 
     private async _getHtmlForWebview(styleUri: vscode.Uri) {
-        const jsonData = await this._fetchTodos();
+        const jsonData = await this._shapedTodos();
 
         return `
             <!DOCTYPE html>
