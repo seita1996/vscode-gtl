@@ -1,4 +1,3 @@
-// import { Gitlab } from '@gitbeaker/browser';
 import { GitlabSettings } from '../types';
 import { FailFetchSettings, GitLabUrlNotSet, GitLabTokenNotSet } from '../errors';
 import fetch from 'cross-fetch';

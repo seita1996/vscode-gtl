@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { fetchTodos } from './gitlabapi/fetchTodos';
+import { settings } from './gitlabapi/settings';
 
 export class NotificationsViewProvider implements vscode.WebviewViewProvider {
     constructor(private readonly extensionUri: vscode.Uri) {}
@@ -65,13 +66,24 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         const resJson = await fetchTodos();
 
         const jsonData = resJson.map((item: any) => {
+            // REST API
+            // return {
+            //     repository: item.project.name,
+            //     title: item.target.title,
+            //     type: item.target_type,
+            //     avatar: item.author.avatar_url,
+            //     notificatonType: item.action_name,
+            //     url: item.target_url,
+            // };
+
+            // GraphQL API
             return {
                 repository: item.project.name,
                 title: item.target.title,
-                type: item.target_type,
-                avatar: item.author.avatar_url,
-                notificatonType: item.action_name,
-                url: item.target_url,
+                type: item.targetType,
+                avatar: `${settings.host}${item.author.avatarUrl}`,
+                notificatonType: item.action,
+                url: item.target.webUrl,
             };
         });
         return jsonData;
