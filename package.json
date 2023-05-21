@@ -2,8 +2,13 @@
   "name": "vscode-gitlab-task-list",
   "displayName": "Gitlab Task List",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "seitaro",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seita1996/vscode-gitlab-task-list"
+  },
   "engines": {
     "vscode": "^1.78.0"
   },
