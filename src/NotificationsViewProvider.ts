@@ -66,17 +66,6 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         const resJson = await fetchTodos();
 
         const jsonData = resJson.map((item: any) => {
-            // REST API
-            // return {
-            //     repository: item.project.name,
-            //     title: item.target.title,
-            //     type: item.target_type,
-            //     avatar: item.author.avatar_url,
-            //     notificatonType: item.action_name,
-            //     url: item.target_url,
-            // };
-
-            // GraphQL API
             return {
                 repository: item.project.name,
                 title: item.target.title,
