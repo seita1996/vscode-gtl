@@ -96,10 +96,11 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
 
     private _shapedTodos(todos: any) {
         const jsonData = todos.map((item: any) => {
+            const targetType = item.targetType === "MERGEREQUEST" ? "MR" : item.targetType;
             return {
                 repository: item.project.name,
                 title: item.target.title,
-                type: item.targetType,
+                type: targetType,
                 avatar: `${settings.host}${item.author.avatarUrl}`,
                 notificatonType: item.action,
                 url: item.target.webUrl,
