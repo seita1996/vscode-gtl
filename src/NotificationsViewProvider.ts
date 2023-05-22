@@ -21,13 +21,38 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
             vscode.Uri.joinPath(this.extensionUri, "public", "index.css")
         );
 
+        const todos = await fetchTodos();
+        let beforeTodos = todos;
+
         // Load the content of the view (1st load)
-        webviewView.webview.html = await this._getHtmlForWebview(styleUri);
+        webviewView.webview.html = await this._getHtmlForWebview(styleUri, todos);
 
         // Load the content of the view (every 10s)
         setInterval(async () => {
-            webviewView.webview.html = await this._getHtmlForWebview(styleUri);
+            const todos = await fetchTodos();
+            const incrementedTodos = this._incrementedTodos(beforeTodos, todos);
+            incrementedTodos.forEach((todo: any) => {
+                const goToGitLab = "Go to GitLab";
+                vscode.window.showInformationMessage(`You are ${todo.action} at ${todo.project.name} ${todo.targetType}.`, goToGitLab)
+                    .then((selection) => {
+                        if (selection === goToGitLab) {
+                            vscode.env.openExternal(vscode.Uri.parse(todo.target.webUrl));
+                        }
+                    }
+                );
+            });
+            webviewView.webview.html = await this._getHtmlForWebview(styleUri, todos);
+            beforeTodos = todos;
         }, 10000);
+    }
+
+    private _incrementedTodos(beforeTodos: any, afterTodos: any) {
+        const diff = afterTodos.filter((afterTodo: any) => {
+            return !beforeTodos.some((beforeTodo: any) => {
+                return beforeTodo.id === afterTodo.id;
+            });
+        });
+        return diff;
     }
 
     private _displayTodos(data: any) {
@@ -69,10 +94,8 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         return html;
     }
 
-    private async _shapedTodos() {
-        const resJson = await fetchTodos();
-
-        const jsonData = resJson.map((item: any) => {
+    private _shapedTodos(todos: any) {
+        const jsonData = todos.map((item: any) => {
             return {
                 repository: item.project.name,
                 title: item.target.title,
@@ -85,8 +108,8 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
         return jsonData;
     }
 
-    private async _getHtmlForWebview(styleUri: vscode.Uri) {
-        const jsonData = await this._shapedTodos();
+    private async _getHtmlForWebview(styleUri: vscode.Uri, todos: any) {
+        const jsonData = this._shapedTodos(todos);
 
         return `
             <!DOCTYPE html>
