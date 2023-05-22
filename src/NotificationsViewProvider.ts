@@ -12,12 +12,19 @@ export class NotificationsViewProvider implements vscode.WebviewViewProvider {
             enableCommandUris: true
         };
 
+        this._updateView(webviewView);
+    }
+
+    private async _updateView(webviewView: vscode.WebviewView) {
         // Uri that enable to load ./public/index.css in the WebView
         const styleUri = webviewView.webview.asWebviewUri(
             vscode.Uri.joinPath(this.extensionUri, "public", "index.css")
         );
 
-        // Load the content of the view
+        // Load the content of the view (1st load)
+        webviewView.webview.html = await this._getHtmlForWebview(styleUri);
+
+        // Load the content of the view (every 10s)
         setInterval(async () => {
             webviewView.webview.html = await this._getHtmlForWebview(styleUri);
         }, 10000);
