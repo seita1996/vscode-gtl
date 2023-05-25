@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { fetchTodos } from './gitlabapi/fetchTodos';
-import { settings } from './gitlabapi/settings';
+import { fetchTodos } from '../gitlab_api/fetch_todos';
+import { settings } from '../settings';
 
-export class NotificationsViewProvider implements vscode.WebviewViewProvider {
+export class TaskViewProvider implements vscode.WebviewViewProvider {
   constructor(private readonly extensionUri: vscode.Uri) { }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {

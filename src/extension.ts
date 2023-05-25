@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { NotificationsViewProvider } from './NotificationsViewProvider';
+import { TaskViewProvider } from './webview/task_view_provider';
 
 export function activate(context: vscode.ExtensionContext) {
-	
+
 	console.log('Congratulations, your extension "vscode-gitlab-task-list" is now active!');
 
 	const commandId = 'vscode-gitlab-task-list.notify';
@@ -18,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(
 			'vscode-gitlab-task-list.notificationsView',
-			new NotificationsViewProvider(context.extensionUri)
+			new TaskViewProvider(context.extensionUri)
 		)
 	);
 }
