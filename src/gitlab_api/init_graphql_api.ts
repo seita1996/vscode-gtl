@@ -2,7 +2,7 @@ import { GitlabSettings } from '../types';
 import { FailFetchSettings, GitLabUrlNotSet, GitLabTokenNotSet } from '../errors';
 import fetch from 'cross-fetch';
 
-class GitlabGraphqlApi {
+export class GitlabGraphqlApi {
   public readonly url: string;
   public readonly headers: { [header: string]: string };
   public readonly requestTimeout: number;
