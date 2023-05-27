@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { fetchTodos } from '../gitlab_api/fetch_todos';
 import { ViewTodos } from './view_todos';
 import { settings } from '../settings';
+import { showStatusBarNotificationBadge } from '../statusbar/notification_badge';
 
 export class TaskViewProvider implements vscode.WebviewViewProvider {
   constructor(private readonly extensionUri: vscode.Uri) { }
@@ -25,6 +26,7 @@ export class TaskViewProvider implements vscode.WebviewViewProvider {
     const viewTodos = new ViewTodos(settings.host, styleUri);
 
     const todos = await fetchTodos();
+    showStatusBarNotificationBadge(todos.length);
     let beforeTodos = todos;
 
     // Load the content of the view (1st load)
@@ -33,6 +35,7 @@ export class TaskViewProvider implements vscode.WebviewViewProvider {
     // Load the content of the view (every 10s)
     setInterval(async () => {
       const todos = await fetchTodos();
+      showStatusBarNotificationBadge(todos.length);
       const incrementedTodos = this._incrementedTodos(beforeTodos, todos);
       incrementedTodos.forEach((todo: any) => {
         const goToGitLab = "Go to GitLab";
