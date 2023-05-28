@@ -4,6 +4,8 @@
 
 This is a Visual Studio Code extension that allows you to display GitLab TODOs in the sidebar, with notifications for new TODOs when they become available.
 
+![](https://github.com/seita1996/vscode-gitlab-task-list/blob/main/media/GTL.png)
+
 ## Features
 
 - Fetches TODO items from GitLab and displays them in the sidebar.
