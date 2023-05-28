@@ -5,6 +5,7 @@ let statusBarItem: vscode.StatusBarItem | undefined;
 export function showStatusBarNotificationBadge(count: number) {
   if (!statusBarItem) {
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+    statusBarItem.command = 'vscode-gitlab-task-list.gtl';
     statusBarItem.tooltip = 'GitLab Task List';
     statusBarItem.text = `$(check) GTL ${count.toString()}`;
     statusBarItem.show();

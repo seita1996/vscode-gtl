@@ -23,8 +23,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-gitlab-task-list.notify",
-        "title": "notify"
+        "command": "vscode-gitlab-task-list.gtl",
+        "title": "gtl"
       }
     ],
     "configuration": {
@@ -45,7 +45,7 @@
       "activitybar": [
         {
           "id": "notificationsView",
-          "title": "GitlabTL",
+          "title": "GTL",
           "icon": "media/icon.svg"
         }
       ]
@@ -55,7 +55,7 @@
         {
           "type": "webview",
           "id": "vscode-gitlab-task-list.notificationsView",
-          "name": "GitlabTL"
+          "name": "GitLab Task List"
         }
       ]
     }

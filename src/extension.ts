@@ -5,13 +5,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Congratulations, your extension "vscode-gitlab-task-list" is now active!');
 
-	const commandId = 'vscode-gitlab-task-list.notify';
-	let disposable = vscode.commands.registerCommand(commandId, () => {
-		vscode.window.showInformationMessage('nofify!' + ', '
-			+ 'gitlaburl:' + vscode.workspace.getConfiguration('gitlab-task-list').get('gitlaburl') + ', '
-			+ 'token:' + vscode.workspace.getConfiguration('gitlab-task-list').get('gitlabtoken'));
-	});
-	context.subscriptions.push(disposable);
+  let activateSidebarDisposable = vscode.commands.registerCommand('vscode-gitlab-task-list.gtl', () => {
+    vscode.commands.executeCommand('workbench.view.extension.notificationsView');
+  });
+  context.subscriptions.push(activateSidebarDisposable);
 
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(
