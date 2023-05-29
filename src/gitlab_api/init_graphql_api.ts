@@ -43,9 +43,11 @@ export class GitlabGraphqlApi {
                           webUrl
                           ... on Issue {
                             title
+                            IssueState: state
                           }
                           ... on MergeRequest {
                             title
+                            MergeRequestState: state
                           }
                         }
                         note {

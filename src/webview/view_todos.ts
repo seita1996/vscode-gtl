@@ -34,6 +34,9 @@ export class ViewTodos {
                     <div class="notification__repository">
                       ${data[i].repository}
                     </div>
+                    <div class="notification__state">
+                      ${this._displayState(data[i].state)}
+                    </div>
                   </div>
                 </div>
                 <div class="card-body">
@@ -46,8 +49,8 @@ export class ViewTodos {
                     </div>
                   </div>
                   <div class="flex-start">
-                    <div class="notification__tag mr-4">
-                      ${data[i].type}
+                    <div class="mr-4">
+                      ${this._displayType(data[i].type)}
                     </div>
                     <div class="notification__type">
                       ${data[i].notificatonType}
@@ -62,6 +65,24 @@ export class ViewTodos {
     return html;
   }
 
+  private _displayType(type: string) {
+    if (type === "ISSUE") {
+      return `<div class="badge badge--green">${type}</div>`;
+    } else if (type === "MR") {
+      return `<div class="badge badge--yellow">${type}</div>`;
+    }
+  }
+
+  private _displayState(state: string) {
+    if (state === "opened") {
+      return `<div class="badge badge--red">${state}</div>`;
+    } else if (state === "closed") {
+      return `<div class="badge badge--blue">${state}</div>`;
+    } else if (state === "merged") {
+      return `<div class="badge badge--blue">${state}</div>`;
+    }
+  }
+
   private _shapedTodos(todos: any) {
     const jsonData = todos.map((item: any) => {
       const targetType = item.targetType === "MERGEREQUEST" ? "MR" : item.targetType;
@@ -72,8 +93,17 @@ export class ViewTodos {
         avatar: `${this.host}${item.author.avatarUrl}`,
         notificatonType: item.action,
         url: item.target.webUrl,
+        state: this._state(item),
       };
     });
     return jsonData;
+  }
+
+  private _state(todo: any) {
+    if (todo.targetType === "ISSUE") {
+      return todo.target.IssueState;
+    } else if (todo.targetType === "MERGEREQUEST") {
+      return todo.target.MergeRequestState;
+    }
   }
 }
