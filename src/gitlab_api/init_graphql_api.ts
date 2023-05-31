@@ -72,6 +72,28 @@ export class GitlabGraphqlApi {
     });
     return await res.json();
   }
+
+  public async todoMarkAsDone(gid: string) {
+    const res: any = await fetch(this.url, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        query: `
+                mutation todo {
+                  todoMarkDone(input: {
+                    id: "${gid}"
+                  }) {
+                    errors
+                    todo {
+                      state
+                    }
+                  }
+                }
+                `
+      })
+    });
+    return await res.json();
+  }
 }
 
 export const initGraphqlApi = (settings: GitlabSettings): any => {
