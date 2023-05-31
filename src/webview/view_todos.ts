@@ -1,7 +1,9 @@
 export class ViewTodos {
   constructor(
     private readonly host: string,
-    private readonly styleUri: string
+    private readonly styleUri: string,
+    private readonly scriptUri: string,
+    private readonly codiconsUri: string
   ) {}
 
   public generate(todos: any[]) {
@@ -15,9 +17,12 @@ export class ViewTodos {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>WebView Example</title>
                 <link rel="stylesheet" href="${this.styleUri}">
+                <link href="${this.codiconsUri}" rel="stylesheet" />
               </head>
               <body>
                 ${this._displayTodos(jsonData)}
+                <div id="msg" />
+                <script src="${this.scriptUri}" />
               </body>
             </html>
           `;
@@ -34,8 +39,13 @@ export class ViewTodos {
                     <div class="notification__repository">
                       ${data[i].repository}
                     </div>
-                    <div class="notification__state">
-                      ${this._displayState(data[i].state)}
+                    <div class="flex-end">
+                      <div class="notification__state mr-4">
+                        ${this._displayState(data[i].state)}
+                      </div>
+                      <div class="check-button" onclick="done(event, '${data[i].id}')">
+                        <div class='codicon codicon-check'></div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -87,6 +97,7 @@ export class ViewTodos {
     const jsonData = todos.map((item: any) => {
       const targetType = item.targetType === "MERGEREQUEST" ? "MR" : item.targetType;
       return {
+        id: item.id,
         repository: item.project.name,
         title: item.target.title,
         type: targetType,

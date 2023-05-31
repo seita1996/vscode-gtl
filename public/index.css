@@ -71,6 +71,21 @@
   background-color: rgb(219, 164, 61);
 }
 
+.check-button {
+  background-color: rgb(94, 94, 94);
+  color: white;
+  border: none;
+  border-radius: 2px;
+  padding: 2px 4px;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.check-button:hover {
+  background-color: rgb(160, 159, 159);
+}
+
 .flex-start {
   display: flex;
   justify-content: flex-start;
@@ -79,6 +94,11 @@
 .flex-between {
   display: flex;
   justify-content: space-between;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .mb-4 {
