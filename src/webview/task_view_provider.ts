@@ -26,11 +26,11 @@ export class TaskViewProvider implements vscode.WebviewViewProvider {
     const scriptUri = webviewView.webview.asWebviewUri(
       vscode.Uri.joinPath(this.extensionUri, "public", "main.js")
     ).toString();
-    const codiconsUri = webviewView.webview.asWebviewUri(
-      vscode.Uri.joinPath(this.extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css')
+    const codiconsCheckUri = webviewView.webview.asWebviewUri(
+      vscode.Uri.joinPath(this.extensionUri, "public", "codicons-check.svg")
     ).toString();
 
-    const viewTodos = new ViewTodos(settings.host, styleUri, scriptUri, codiconsUri);
+    const viewTodos = new ViewTodos(settings.host, styleUri, scriptUri, codiconsCheckUri);
 
     const todos = await fetchTodos();
     showStatusBarNotificationBadge(todos.length);

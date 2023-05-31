@@ -3,7 +3,7 @@ export class ViewTodos {
     private readonly host: string,
     private readonly styleUri: string,
     private readonly scriptUri: string,
-    private readonly codiconsUri: string
+    private readonly codiconsCheckUri: string,
   ) {}
 
   public generate(todos: any[]) {
@@ -17,7 +17,6 @@ export class ViewTodos {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>WebView Example</title>
                 <link rel="stylesheet" href="${this.styleUri}">
-                <link href="${this.codiconsUri}" rel="stylesheet" />
               </head>
               <body>
                 ${this._displayTodos(jsonData)}
@@ -44,7 +43,9 @@ export class ViewTodos {
                         ${this._displayState(data[i].state)}
                       </div>
                       <div class="check-button" onclick="done(event, '${data[i].id}')">
-                        <div class='codicon codicon-check'></div>
+                        <div>
+                          <img src="${this.codiconsCheckUri}" />
+                        </div>
                       </div>
                     </div>
                   </div>
