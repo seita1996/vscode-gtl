@@ -43,9 +43,8 @@ export class ViewTodos {
                         ${this._displayState(data[i].state)}
                       </div>
                       <div class="check-button" onclick="done(event, '${data[i].id}')">
-                        <div>
-                          <img src="${this.codiconsCheckUri}" />
-                        </div>
+                        <img src="${this.codiconsCheckUri}" />
+                        <span></span>
                       </div>
                     </div>
                   </div>
