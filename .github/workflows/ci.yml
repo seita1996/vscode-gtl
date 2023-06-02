@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: Checkout code
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: Checkout code
@@ -64,5 +64,7 @@ jobs:
         run: npm ci
       - name: Compile
         run: npm run compile-tests-skip-libcheck
-      - name: Run integration test
-        run: npm run test-integration
+      - name: Run integration test (headless)
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: npm run test-integration
