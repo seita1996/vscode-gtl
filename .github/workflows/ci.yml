@@ -45,3 +45,24 @@ jobs:
         run: npm ci
       - name: Run unit test
         run: npm run test-unit
+  test-integration:
+    name: Run integration test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install dependency
+        run: npm ci
+      - name: Compile
+        run: npm run compile-tests
+      - name: Run integration test
+        run: npm run test-integration
