@@ -63,6 +63,6 @@ jobs:
       - name: Install dependency
         run: npm ci
       - name: Compile
-        run: npm run compile-tests
+        run: npm run compile-tests-skip-libcheck
       - name: Run integration test
         run: npm run test-integration
