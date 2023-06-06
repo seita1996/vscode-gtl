@@ -18,4 +18,6 @@ export function showStatusBarNotificationBadge(count: number) {
     statusBarItem.color = undefined;
     statusBarItem.text = `$(check) GTL ${count.toString()}`;
   }
+
+  return statusBarItem;
 }
