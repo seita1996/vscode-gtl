@@ -3,7 +3,7 @@
   "displayName": "Gitlab Task List",
   "description": "Display GitLab TODOs in the sidebar, with notifications for new TODOs when they become available.",
   "icon": "media/GTL.png",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "publisher": "seitaro",
   "license": "MIT",
   "repository": {
