@@ -1,3 +1,5 @@
+import { GitlabTodo } from '../types';
+
 export class ViewTodos {
   constructor(
     private readonly host: string,
@@ -6,7 +8,7 @@ export class ViewTodos {
     private readonly codiconsCheckUri: string,
   ) {}
 
-  public generate(todos: any[]) {
+  public generate(todos: GitlabTodo[]) {
     const jsonData = this._shapedTodos(todos);
 
     return `

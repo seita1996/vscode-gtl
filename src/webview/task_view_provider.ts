@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { initGraphqlApi } from '../gitlab_api/init_graphql_api';
+import { GitlabTodo } from '../types';
 import { ViewTodos } from './view_todos';
 import { settings } from '../settings';
 
@@ -21,7 +22,7 @@ export class TaskViewProvider implements vscode.WebviewViewProvider {
     this._setWebviewMessageListener();
   }
 
-  public async updateView(todos: any) {
+  public async updateView(todos: GitlabTodo[]) {
     // Uri that enable to load ./public/index.css in the WebView
     const styleUri = this.wvv.webview.asWebviewUri(
       vscode.Uri.joinPath(this.extensionUri, "public", "index.css")

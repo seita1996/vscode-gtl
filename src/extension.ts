@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { TaskViewProvider } from './webview/task_view_provider';
 import { fetchTodos } from './gitlab_api/fetch_todos';
+import { GitlabTodo } from './types';
 import { showStatusBarNotificationBadge } from './statusbar/notification_badge';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -36,7 +37,7 @@ async function _startPolling(taskView: TaskViewProvider) {
     const todos = await fetchTodos();
     showStatusBarNotificationBadge(todos.length);
     const incrementedTodos = _incrementedTodos(beforeTodos, todos);
-    incrementedTodos.forEach((todo: any) => {
+    incrementedTodos.forEach((todo: GitlabTodo) => {
       const goToGitLab = "Go to GitLab";
       vscode.window.showInformationMessage(`You are ${todo.action} at ${todo.project.name} ${todo.targetType}.`, goToGitLab)
         .then((selection) => {
@@ -51,9 +52,9 @@ async function _startPolling(taskView: TaskViewProvider) {
   }, 10000);
 }
 
-function _incrementedTodos(beforeTodos: any, afterTodos: any) {
-  const diff = afterTodos.filter((afterTodo: any) => {
-    return !beforeTodos.some((beforeTodo: any) => {
+function _incrementedTodos(beforeTodos: GitlabTodo[], afterTodos: GitlabTodo[]) {
+  const diff = afterTodos.filter((afterTodo: GitlabTodo) => {
+    return !beforeTodos.some((beforeTodo: GitlabTodo) => {
       return beforeTodo.id === afterTodo.id;
     });
   });
