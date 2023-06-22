@@ -30,6 +30,7 @@
 
 .notification__title {
   font-size: 12px;
+  width: 80%;
 }
 
 .notification__type {
@@ -42,8 +43,8 @@
 }
 
 .notification__icon img {
-  width: 100%;
-  height: 100%;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
 }
 
