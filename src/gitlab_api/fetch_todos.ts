@@ -7,3 +7,13 @@ export const fetchTodos = async (): Promise<GitlabTodo[]> => {
   const res = await gitlabGraphqlApi.todos();
   return res.data.currentUser.todos.nodes;
 };
+
+export const incrementedTodos = (beforeTodos: GitlabTodo[], todos: GitlabTodo[]): GitlabTodo[] => {
+  const incrementedTodos: GitlabTodo[] = [];
+  todos.forEach((todo: GitlabTodo) => {
+    if (!beforeTodos.some((beforeTodo: GitlabTodo) => beforeTodo.id === todo.id)) {
+      incrementedTodos.push(todo);
+    }
+  });
+  return incrementedTodos;
+};

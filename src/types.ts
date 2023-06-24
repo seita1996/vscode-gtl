@@ -18,8 +18,8 @@ export interface GitlabTodo {
   target: {
       webUrl: string;
       title: string;
-      IssueState: string | undefined;
-      MergeRequestState: string | undefined;
+      IssueState?: string;
+      MergeRequestState?: string;
   };
   note: {
       id: string;

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { TaskViewProvider } from './webview/task_view_provider';
 import { GitlabTodo } from './types';
-import { fetchTodos } from './gitlab_api/fetch_todos';
+import { fetchTodos, incrementedTodos } from './gitlab_api/fetch_todos';
 import { showStatusBarNotificationBadge } from './statusbar/notification_badge';
 
 export class TaskPoller {
@@ -26,35 +26,17 @@ export class TaskPoller {
       setInterval(async () => {
         const todos = await fetchTodos();
         showStatusBarNotificationBadge(todos.length);
-        const incrementedTodos = this._incrementedTodos(todos);
+        const incTodos = incrementedTodos(this.beforeTodos, todos);
         this.beforeTodos = todos;
         this.taskView.updateView(todos);
-        this._handleIncrementedTodos(incrementedTodos);
+        this._showInformationMessage(incTodos);
       }, 10000);
     } catch {
-      vscode.window.showErrorMessage(
-        'Fail fetching todos. Please set your GitLab URL and token. And then reload the window.',
-        'Open Settings'
-        ).then((selection) => {
-          if (selection === 'Open Settings') {
-            vscode.commands.executeCommand('workbench.action.openSettings', 'gitlab-task-list');
-          }
-        }
-      );
+      this._showErrorMessage();
     }
   }
 
-  private _incrementedTodos(todos: GitlabTodo[]): GitlabTodo[] {
-    const incrementedTodos: GitlabTodo[] = [];
-    todos.forEach((todo: GitlabTodo) => {
-      if (!this.beforeTodos.some((beforeTodo: GitlabTodo) => beforeTodo.id === todo.id)) {
-        incrementedTodos.push(todo);
-      }
-    });
-    return incrementedTodos;
-  }
-
-  private _handleIncrementedTodos(incrementedTodos: GitlabTodo[]) {
+  private _showInformationMessage(incrementedTodos: GitlabTodo[]) {
     incrementedTodos.forEach((todo: GitlabTodo) => {
       const goToGitLab = "Go to GitLab";
       vscode.window.showInformationMessage(`You are ${todo.action} at ${todo.project.name} ${todo.targetType}.`, goToGitLab)
@@ -65,5 +47,17 @@ export class TaskPoller {
         }
         );
     });
+  }
+
+  private _showErrorMessage() {
+    vscode.window.showErrorMessage(
+      'Fail fetching todos. Please set your GitLab URL and token. And then reload the window.',
+      'Open Settings'
+      ).then((selection) => {
+        if (selection === 'Open Settings') {
+          vscode.commands.executeCommand('workbench.action.openSettings', 'gitlab-task-list');
+        }
+      }
+    );
   }
 }
