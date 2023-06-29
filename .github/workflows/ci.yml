@@ -63,7 +63,7 @@ jobs:
       - name: Install dependency
         run: npm ci
       - name: Compile
-        run: npm run compile-tests-skip-libcheck
+        run: npm run compile && npm run compile-tests-skip-libcheck
       - name: Run integration test (headless)
         uses: GabrielBB/xvfb-action@v1
         with:
