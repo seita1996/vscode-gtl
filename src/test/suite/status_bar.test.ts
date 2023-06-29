@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-import { showStatusBarNotificationBadge } from '../../statusbar/notification_badge';
+import { showStatusBarNotificationBadge } from '../../status_bar';
 
 suite('Status bar', () => {
   let statusBarItem: vscode.StatusBarItem | undefined;

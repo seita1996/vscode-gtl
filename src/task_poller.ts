@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { TaskViewProvider } from './webview/task_view_provider';
+import { TaskViewProvider } from './task_view_provider';
 import { GitlabTodo } from './types';
 import { fetchTodos, incrementedTodos } from './gitlab_api/fetch_todos';
-import { showStatusBarNotificationBadge } from './statusbar/notification_badge';
+import { showStatusBarNotificationBadge } from './status_bar';
 
 export class TaskPoller {
   private taskView: TaskViewProvider;

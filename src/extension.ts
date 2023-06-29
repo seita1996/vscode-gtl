@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { TaskViewProvider } from './webview/task_view_provider';
+import { TaskViewProvider } from './task_view_provider';
 import { TaskPoller } from './task_poller';
 
 export function activate(context: vscode.ExtensionContext) {

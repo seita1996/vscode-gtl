@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { initGraphqlApi } from '../gitlab_api/init_graphql_api';
-import { GitlabTodo } from '../types';
-import { ViewTodos } from './view_todos';
-import { settings } from '../settings';
+import { initGraphqlApi } from './gitlab_api/init_graphql_api';
+import { GitlabTodo } from './types';
+import { ViewTodos } from './view/view_todos';
+import { settings } from './settings';
 
 export class TaskViewProvider implements vscode.WebviewViewProvider {
   wvv!: vscode.WebviewView;

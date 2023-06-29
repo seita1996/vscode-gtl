@@ -1,15 +1,37 @@
 import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
-// import * as myExtension from '../../extension';
 
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	test('Sample test', () => {
-		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
-	});
+  const extensionId = 'seitaro.vscode-gitlab-task-list';
+
+  test("extension should be present", () => {
+    assert.ok(vscode.extensions.getExtension(extensionId));
+  });
+
+  test('should activate the extension', function () {
+    this.timeout(1 * 60 * 1000);
+    return vscode.extensions.getExtension(extensionId)!.activate()
+        .then((api) => {
+            assert.ok(true);
+        });
+  });
+
+  test('should register all commands', function () {
+    return vscode.commands.getCommands(true).then((commands) => {
+        commands.forEach((value) => {
+            if (value.startsWith('vscode-gitlab-task-list')) {
+                console.log(value);
+            }
+        });
+        const COMMANDS = [
+            'vscode-gitlab-task-list.gtl'
+        ];
+        const foundGTLCommands = commands.filter((value) => {
+            return COMMANDS.indexOf(value) >= 0 || COMMANDS.includes(value);
+        });
+        assert.equal(foundGTLCommands.length, COMMANDS.length);
+    });
+  });
 });
