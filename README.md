@@ -1,6 +1,8 @@
 # GitLab Task List Extension for Visual Studio Code
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/seita1996/vscode-gitlab-task-list/actions/workflows/ci.yml/badge.svg)](https://github.com/seita1996/vscode-gitlab-task-list/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/seita1996/vscode-gitlab-task-list/actions/workflows/codeql.yml/badge.svg)](https://github.com/seita1996/vscode-gitlab-task-list/actions/workflows/codeql.yml)
 
 This is a Visual Studio Code extension that allows you to display GitLab TODOs in the sidebar, with notifications for new TODOs when they become available.
 
