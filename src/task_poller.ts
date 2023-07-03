@@ -13,6 +13,19 @@ export class TaskPoller {
     this.beforeTodos = [];
   }
 
+  async oneTimePolling() {
+    try {
+      const todos = await fetchTodos();
+      showStatusBarNotificationBadge(todos.length);
+      this.beforeTodos = todos;
+
+      // Load the content of the view (1st load)
+      this.taskView.updateView(todos);
+    } catch {
+      this._showErrorMessage();
+    }
+  }
+
   async startPolling() {
     try {
       const todos = await fetchTodos();
