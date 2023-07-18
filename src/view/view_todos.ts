@@ -96,9 +96,9 @@ export class ViewTodos {
     } else if (diffInDays === 1) {
       return 'Yesterday';
     } else if (diffInHours > 1) {
-      return `${diffInHours} hours`;
+      return `${diffInHours} h`;
     } else if (diffInMinutes > 1) {
-      return `${diffInMinutes} minutes`;
+      return `${diffInMinutes} min`;
     } else {
       return 'Just now';
     }
