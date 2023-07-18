@@ -6,6 +6,7 @@ export class ViewTodos {
     private readonly styleUri: string,
     private readonly scriptUri: string,
     private readonly codiconsCheckUri: string,
+    private readonly codiconsHistoryUri: string,
   ) {}
 
   public generate(todos: GitlabTodo[]) {
@@ -60,12 +61,18 @@ export class ViewTodos {
                       ${data[i].title}
                     </div>
                   </div>
-                  <div class="flex-start">
-                    <div class="mr-4">
-                      ${this._displayType(data[i].type)}
+                  <div class="flex-between">
+                    <div class="flex-start">
+                      <div class="mr-4">
+                        ${this._displayType(data[i].type)}
+                      </div>
+                      <div class="notification__type">
+                        ${data[i].notificatonType}
+                      </div>
                     </div>
-                    <div class="notification__type">
-                      ${data[i].notificatonType}
+                    <div>
+                      <img src="${this.codiconsHistoryUri}" />
+                      ${data[i].elapsed}
                     </div>
                   </div>
                 </div>
@@ -75,6 +82,26 @@ export class ViewTodos {
     }
 
     return html;
+  }
+
+  private _fuzzyTimeDifference(timeFrom: number, timeTo: number) {
+    const diffInMilliseconds = Math.abs(timeTo - timeFrom);
+    const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInDays > 1) {
+      return `${diffInDays} days`;
+    } else if (diffInDays === 1) {
+      return 'Yesterday';
+    } else if (diffInHours > 1) {
+      return `${diffInHours} hours`;
+    } else if (diffInMinutes > 1) {
+      return `${diffInMinutes} minutes`;
+    } else {
+      return 'Just now';
+    }
   }
 
   private _displayType(type: string) {
@@ -100,6 +127,7 @@ export class ViewTodos {
       const targetType = item.targetType === "MERGEREQUEST" ? "MR" : item.targetType;
       return {
         id: item.id,
+        elapsed: this._fuzzyTimeDifference(Date.parse(item.createdAt), Date.now()),
         repository: item.project.name,
         title: item.target.title,
         type: targetType,
