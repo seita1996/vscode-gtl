@@ -81,6 +81,15 @@ export class ViewTodos {
               `;
     }
 
+    if (data.length > 0) {
+      html += `
+      <div class="check-button center" onclick="doneAll(event)">
+        <img src="${this.codiconsCheckUri}" />
+        <span>Mark all as done</span>
+      </div>
+      `;
+    }
+
     return html;
   }
 

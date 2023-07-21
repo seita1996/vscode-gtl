@@ -11,3 +11,11 @@ function done(event, gid) {
     gid: gid,
   });
 }
+
+function doneAll(event) {
+  event.target.cursor = 'none';
+
+  vscode.postMessage({
+    command: "done-all"
+  });
+}

@@ -47,12 +47,14 @@ export class TaskViewProvider implements vscode.WebviewViewProvider {
     this.wvv.webview.onDidReceiveMessage((message) => {
       const command = message.command;
       const gid = message.gid;
+      const gitlabGraphqlApi = initGraphqlApi(settings);
 
       switch (command) {
         case 'done':
-          const gitlabGraphqlApi = initGraphqlApi(settings);
           gitlabGraphqlApi.todoMarkAsDone(gid);
           break;
+        case 'done-all':
+          gitlabGraphqlApi.todoMarkAllAsDone();
       }
     });
   }
