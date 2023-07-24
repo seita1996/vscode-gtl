@@ -23,6 +23,10 @@ export class TaskViewProvider implements vscode.WebviewViewProvider {
   }
 
   public async updateView(todos: GitlabTodo[]) {
+    if (this.wvv === undefined) {
+      return;
+    }
+
     // Uri that enable to load ./public/index.css in the WebView
     const styleUri = this.wvv.webview.asWebviewUri(
       vscode.Uri.joinPath(this.extensionUri, "public", "index.css")
