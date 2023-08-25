@@ -1,7 +1,7 @@
 .card {
-  background-color: gray;
+  background-color: var(--vscode-editor-wordHighlightBackground);
   padding: 6px;
-  border: 1px solid white;
+  border: 1px solid var(--vscode-editor-foreground);
   margin-bottom: 8px;
   overflow-wrap: anywhere;
 }
@@ -20,7 +20,7 @@
 
 .linkbox a:hover {
   opacity: 0.1;
-  background-color: #000000;
+  background-color: gray;
 }
 
 .notification__repository {
@@ -73,8 +73,8 @@
 }
 
 .check-button {
-  background-color: rgb(94, 94, 94);
-  color: white;
+  background-color: var(--vscode-editor-selectionHighlightBackground);
+  color: var(--vscode-editor-foreground);
   border: none;
   border-radius: 2px;
   padding: 2px 4px;
@@ -84,7 +84,7 @@
 }
 
 .check-button:hover {
-  background-color: rgb(160, 159, 159);
+  opacity: 0.8;
 }
 
 .flex-start {

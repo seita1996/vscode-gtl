@@ -12,7 +12,7 @@ export function showStatusBarNotificationBadge(count: number) {
   }
 
   if (count > 0) {
-    statusBarItem.color = 'yellow';
+    statusBarItem.color = new vscode.ThemeColor('editorWarning.foreground');
     statusBarItem.text = `$(comments-view-icon) GTL ${count.toString()}`;
   } else {
     statusBarItem.color = undefined;
