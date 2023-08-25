@@ -10,9 +10,9 @@ suite('Status bar', () => {
 		assert.strictEqual(statusBarItem.text, `$(check) GTL 0`);
 	});
 
-	test('when notification exists, show yellow comment icon and the number of notifications', async () => {
+	test('when notification exists, show warningColor comment icon and the number of notifications', async () => {
     statusBarItem = await showStatusBarNotificationBadge(1);
 		assert.strictEqual(statusBarItem.text, `$(comments-view-icon) GTL 1`);
-    assert.strictEqual(statusBarItem.color, 'yellow');
+    assert.deepStrictEqual(statusBarItem.color, new vscode.ThemeColor('editorWarning.foreground'));
 	});
 });

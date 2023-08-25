@@ -34,14 +34,8 @@ export class TaskViewProvider implements vscode.WebviewViewProvider {
     const scriptUri = this.wvv.webview.asWebviewUri(
       vscode.Uri.joinPath(this.extensionUri, "public", "main.js")
     ).toString();
-    const codiconsCheckUri = this.wvv.webview.asWebviewUri(
-      vscode.Uri.joinPath(this.extensionUri, "public", "codicons-check.svg")
-    ).toString();
-    const codiconsHistoryUri = this.wvv.webview.asWebviewUri(
-      vscode.Uri.joinPath(this.extensionUri, "public", "codicons-history.svg")
-    ).toString();
 
-    const viewTodos = new ViewTodos(settings.host, styleUri, scriptUri, codiconsCheckUri, codiconsHistoryUri);
+    const viewTodos = new ViewTodos(settings.host, styleUri, scriptUri);
 
     // Display the todos in the webview view
     this.wvv.webview.html = viewTodos.generate(todos);

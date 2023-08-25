@@ -1,12 +1,11 @@
 import { GitlabTodo } from '../types';
+import { codiconsCheckSVG, codiconsHistorySVG } from './svg_icons';
 
 export class ViewTodos {
   constructor(
     private readonly host: string,
     private readonly styleUri: string,
     private readonly scriptUri: string,
-    private readonly codiconsCheckUri: string,
-    private readonly codiconsHistoryUri: string,
   ) {}
 
   public generate(todos: GitlabTodo[]) {
@@ -46,7 +45,7 @@ export class ViewTodos {
                         ${this._displayState(data[i].state)}
                       </div>
                       <div class="check-button" onclick="done(event, '${data[i].id}')">
-                        <img src="${this.codiconsCheckUri}" />
+                        ${codiconsCheckSVG}
                         <span></span>
                       </div>
                     </div>
@@ -71,7 +70,7 @@ export class ViewTodos {
                       </div>
                     </div>
                     <div>
-                      <img src="${this.codiconsHistoryUri}" />
+                      ${codiconsHistorySVG}
                       ${data[i].elapsed}
                     </div>
                   </div>
@@ -84,7 +83,7 @@ export class ViewTodos {
     if (data.length > 0) {
       html += `
       <div class="check-button center" onclick="doneAll(event)">
-        <img src="${this.codiconsCheckUri}" />
+        ${codiconsCheckSVG}
         <span>Mark all as done</span>
       </div>
       `;
