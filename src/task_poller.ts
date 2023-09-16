@@ -68,7 +68,7 @@ export class TaskPoller {
       'Open Settings'
       ).then((selection) => {
         if (selection === 'Open Settings') {
-          vscode.commands.executeCommand('workbench.action.openSettings', 'gitlab-task-list');
+          vscode.commands.executeCommand('workbench.action.openSettings', 'gtl');
         }
       }
     );

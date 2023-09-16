@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-  const extensionId = 'seitaro.vscode-gitlab-task-list';
+  const extensionId = 'seitaro.vscode-gtl';
 
   test("extension should be present", () => {
     assert.ok(vscode.extensions.getExtension(extensionId));
@@ -21,12 +21,12 @@ suite('Extension Test Suite', () => {
   test('should register all commands', function () {
     return vscode.commands.getCommands(true).then((commands) => {
         commands.forEach((value) => {
-            if (value.startsWith('vscode-gitlab-task-list')) {
+            if (value.startsWith('vscode-gtl')) {
                 console.log(value);
             }
         });
         const COMMANDS = [
-            'vscode-gitlab-task-list.gtl'
+            'vscode-gtl.gtl'
         ];
         const foundGTLCommands = commands.filter((value) => {
             return COMMANDS.indexOf(value) >= 0 || COMMANDS.includes(value);
