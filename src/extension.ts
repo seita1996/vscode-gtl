@@ -4,12 +4,12 @@ import { TaskPoller } from './task_poller';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	console.log('Congratulations, your extension "vscode-gitlab-task-list" is now active!');
+	console.log('Congratulations, your extension "vscode-gtl" is now active!');
 
   const taskView = new TaskViewProvider(context.extensionUri);
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(
-			'vscode-gitlab-task-list.notificationsView',
+			'vscode-gtl.notificationsView',
 			taskView
 		)
 	);
@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
   const taskPoller = new TaskPoller(taskView);
   taskPoller.startPolling();
 
-  let activateSidebarDisposable = vscode.commands.registerCommand('vscode-gitlab-task-list.gtl', () => {
+  let activateSidebarDisposable = vscode.commands.registerCommand('vscode-gtl.gtl', () => {
     vscode.commands.executeCommand('workbench.view.extension.notificationsView');
     taskPoller.oneTimePolling();
   });
