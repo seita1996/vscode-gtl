@@ -3,7 +3,7 @@
   "displayName": "GTL",
   "description": "Display GitLab TODOs in the sidebar, with notifications for new TODOs when they become available.",
   "icon": "media/GTL.png",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "publisher": "seitaro",
   "license": "MIT",
   "repository": {
