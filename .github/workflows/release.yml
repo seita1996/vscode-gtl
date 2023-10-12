@@ -1,0 +1,10 @@
+name: Release New Version
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  call-lint-and-test:
+    uses: ./.github/workflows/ci.yml
