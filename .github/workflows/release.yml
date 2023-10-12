@@ -26,7 +26,5 @@ jobs:
           cache: 'npm'
       - name: Install Dependencies
         run: npm install
-      - name: Build Extension
-        run: npm run build
       - name: Publish to Visual Studio Code Marketplace
         run: npx vsce publish -p ${{ secrets.VSCE_TOKEN }}
