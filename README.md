@@ -23,7 +23,7 @@ This is a Visual Studio Code extension that allows you to display GitLab TODOs i
 
 Before using this extension, make sure you have the following:
 
-- Visual Studio Code version 1.80.0 or higher.
+- Visual Studio Code version 1.82.0 or higher.
 - GitLab account with access to relevant projects.
 - Personal access token (PAT) with the necessary permissions to access GitLab's API.
 
